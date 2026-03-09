@@ -310,7 +310,7 @@ lang: ''
 
 6. 编写名为 `censor` 的函数，把字符串中出现的每一处 `foo` 替换为 `xxx`。例如，字符串 `"food fool"` 会变为 `"xxxd xxxl"`。在不失清晰性的前提下程序越短越好。
 
-   ```C
+   ```c
    #include <stdio.h>
    #include <string.h>
    

@@ -15,53 +15,53 @@ lang: ''
 
 1. 给定以下代码，主线程main中的断言有可能触发吗？  
 
-   ```C
-   # include <stdio.h> 
-   # include <assert.h> 
-   # include <threads.h> 
-   # include <stdatomic.h>
-   
-   atomic_int x = 0, y = 0, z = 0;
-   int w_x(void *arg)
-   {
-       atomic_store_explicit(&x, 1, memory_order_relaxed);
-       return 0;
-   }
-   int w_y(void *arg)
-   {
-       atomic_store_explicit(&y, 1, memory_order_relaxed);
-       return 0;
-   }
-   int if_x_wz(void *arg)
-   {
-       while (!atomic_load_explicit(&x, memory_order_relaxed))
-           ;
-       if (atomic_load_explicit(&y, memory_order_relaxed))
-           z = 1;
-       return 0;
-   }
-   int if_y_wz(void *arg)
-   {
-       while (!atomic_load_explicit(&y, memory_order_relaxed))
-           ;
-       if (atomic_load_explicit(&x, memory_order_relaxed))
-           z = 1;
-       return 0;
-   }
-   int main(void)
-   {
-       thrd_t t0, t1, t2, t3;
-       thrd_create(&t0, w_x, 0);
-       thrd_create(&t1, w_y, 0);
-       thrd_create(&t2, if_x_wz, 0);
-       thrd_create(&t3, if_y_wz, 0);
-       thrd_join(t0, &(int){0});
-       thrd_join(t1, &(int){0});
-       thrd_join(t2, &(int){0});
-       thrd_join(t3, &(int){0});
-       assert(z == 1);
-   }
-   ```
+```C
+# include <stdio.h> 
+# include <assert.h> 
+# include <threads.h> 
+# include <stdatomic.h>
+
+atomic_int x = 0, y = 0, z = 0;
+int w_x(void *arg)
+{
+    atomic_store_explicit(&x, 1, memory_order_relaxed);
+    return 0;
+}
+int w_y(void *arg)
+{
+    atomic_store_explicit(&y, 1, memory_order_relaxed);
+    return 0;
+}
+int if_x_wz(void *arg)
+{
+    while (!atomic_load_explicit(&x, memory_order_relaxed))
+        ;
+    if (atomic_load_explicit(&y, memory_order_relaxed))
+        z = 1;
+    return 0;
+}
+int if_y_wz(void *arg)
+{
+    while (!atomic_load_explicit(&y, memory_order_relaxed))
+        ;
+    if (atomic_load_explicit(&x, memory_order_relaxed))
+        z = 1;
+    return 0;
+}
+int main(void)
+{
+    thrd_t t0, t1, t2, t3;
+    thrd_create(&t0, w_x, 0);
+    thrd_create(&t1, w_y, 0);
+    thrd_create(&t2, if_x_wz, 0);
+    thrd_create(&t3, if_y_wz, 0);
+    thrd_join(t0, &(int){0});
+    thrd_join(t1, &(int){0});
+    thrd_join(t2, &(int){0});
+    thrd_join(t3, &(int){0});
+    assert(z == 1);
+}
+```
 
    
 
