@@ -1,6 +1,6 @@
 --- 
 title: VIM
-published: 2026-03-09
+published: 2025-03-01
 description: ''
 image: ''
 tags: []

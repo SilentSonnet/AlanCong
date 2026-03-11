@@ -1,6 +1,6 @@
 ---
 title: 《C语言程序设计-现代方法》-课后习题-第二十四章
-published: 2026-03-09
+published: 2023-02-23
 description: ''
 image: ''
 tags: []
